@@ -2,6 +2,7 @@
 
 const express = require('express');
 const logger = require('morgan');
+require('colors');
 
 // Security
 const mongoSanitize = require('express-mongo-sanitize');
@@ -10,9 +11,16 @@ const rateLimit = require('express-rate-limit');
 const hpp = require('hpp');
 const cors = require('cors');
 
+const connectMongoDB = require('./database/mongoDB');
+
+const { NODE_ENV } = require('./config/env.keys');
+
 // Creates an Express application.
 // The express() function is a top-level function exported by the express module.
 const app = express();
+
+// Connection to database
+connectMongoDB();
 
 // HTTP request logger middleware in development mode
 // Concise output colored by response status for development use.
@@ -47,13 +55,13 @@ app.use(cors({ origin: '*' }));
 // Binds and listens for connections on the specified port.
 // This method is identical to Node’s http.Server.listen().
 const server = app.listen(3300, () => {
-  console.log('Server started on port: 3300');
+  console.log('Server started on port: 3300'.black.bgWhite.bold);
 });
 
 // The 'unhandledRejection' event is useful for detecting and keeping track of
 // promises that were rejected whose rejections have not yet been handled.
 process.on('unhandledRejection', (err, promise) => {
-  console.log('Server Error');
+  console.log('Server Error'.red);
 
   // close server and exit process
   server.close(() => process.exit(1));
