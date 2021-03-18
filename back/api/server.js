@@ -12,8 +12,8 @@ const hpp = require('hpp');
 const cors = require('cors');
 
 const connectMongoDB = require('./database/mongoDB');
-
 const { NODE_ENV } = require('./config/env.keys');
+const router = require('./router');
 
 // Creates an Express application.
 // The express() function is a top-level function exported by the express module.
@@ -51,6 +51,9 @@ app.use(hpp());
 // Middleware that can be used to enable CORS with various options.
 app.use(cors({ origin: '*' }));
 // ---- -------- ----
+
+// Router
+router(app);
 
 // Binds and listens for connections on the specified port.
 // This method is identical to Node’s http.Server.listen().
