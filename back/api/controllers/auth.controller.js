@@ -28,6 +28,7 @@ exports.login = async (req, res, next) => {
     const isMatch = await user.matchPassword(password);
 
     if (!isMatch) {
+      //TODO: ErrorHandler
       throw new Error();
     }
 
@@ -38,4 +39,16 @@ exports.login = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+};
+
+//TODO: autorize
+exports.logout = async (req, res, next) => {
+  //TODO: get user id of authorize
+  const id = '6054785c6f09b56588ca7fa2';
+
+  try {
+    await UserModel.clearingToken(id);
+
+    return res.status(204).send();
+  } catch (error) {}
 };

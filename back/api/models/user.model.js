@@ -37,6 +37,11 @@ UserSchema.methods.createToken = async function () {
   return token;
 };
 
+// Clearing token
+UserSchema.statics.clearingToken = async function (id) {
+  return await this.findByIdAndUpdate(id, { token: null });
+};
+
 // users collection mongoDB
 const UserModel = mongoose.model('User', UserSchema);
 
