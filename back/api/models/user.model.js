@@ -42,6 +42,13 @@ UserSchema.statics.clearingToken = async function (id) {
   return await this.findByIdAndUpdate(id, { token: null });
 };
 
+// Get id from token and get user by id
+UserSchema.statics.getUserByIdFromToken = async function (token) {
+  const id = await jwt.verify(token, JWT_SECRET).id;
+
+  return await this.findById(id);
+};
+
 // users collection mongoDB
 const UserModel = mongoose.model('User', UserSchema);
 

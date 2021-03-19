@@ -2,7 +2,6 @@
 
 const UserModel = require('../models/user.model');
 
-// TODO: validateCredentialsReg & validateUniqueEmail
 exports.register = async (req, res, next) => {
   try {
     // Create user
@@ -16,7 +15,6 @@ exports.register = async (req, res, next) => {
   }
 };
 
-// TODO: validateCredentialsLog
 exports.login = async (req, res, next) => {
   const { email, password } = req.body;
 
@@ -46,14 +44,32 @@ exports.login = async (req, res, next) => {
   }
 };
 
-//TODO: autorize
 exports.logout = async (req, res, next) => {
-  //TODO: get user id of authorize
-  const id = '6054785c6f09b56588ca7fa2';
+  const { id } = req.user;
 
   try {
     await UserModel.clearingToken(id);
 
     return res.status(204).send();
   } catch (error) {}
+};
+
+exports.authorize = async (req, res, next) => {
+  try {
+    const authorizationHeader = req.get('Authorization');
+    const token = authorizationHeader.replace('Bearer ', '');
+
+    const user = await UserModel.getUserByIdFromToken(token);
+
+    if (!user || user.token !== token) {
+      //TODO: ErrorHandler
+      throw new Error();
+    }
+
+    req.user = user;
+
+    next();
+  } catch (error) {
+    next(error);
+  }
 };
