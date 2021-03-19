@@ -24,6 +24,11 @@ exports.login = async (req, res, next) => {
     // Check for User
     const user = await UserModel.findOne({ email });
 
+    if (!user) {
+      //TODO: ErrorHandler
+      throw new Error();
+    }
+
     // Check is password matches
     const isMatch = await user.matchPassword(password);
 
