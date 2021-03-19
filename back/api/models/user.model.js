@@ -15,38 +15,58 @@ const UserSchema = new Schema({
 
 // Encrypt password using bcryptjs
 UserSchema.pre('save', async function () {
-  const salt = await bcrypt.genSalt(10);
-  this.password = await bcrypt.hash(this.password, salt);
+  try {
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+  } catch (error) {
+    throw error;
+  }
 });
 
 // Match user entered password to hashed password in database
 UserSchema.methods.matchPassword = async function (enteredPassword) {
-  return await bcrypt.compare(enteredPassword, this.password);
+  try {
+    return await bcrypt.compare(enteredPassword, this.password);
+  } catch (error) {
+    throw error;
+  }
 };
 
 // Create user token
 UserSchema.methods.createToken = async function () {
-  const id = this._id;
+  try {
+    const id = this._id;
 
-  const token = jwt.sign({ id }, JWT_SECRET, {
-    expiresIn: 2 * 24 * 60 * 60, // token lifetime: 2 days * 24 hours * 60 minutes * 60 seconds
-  });
+    const token = jwt.sign({ id }, JWT_SECRET, {
+      expiresIn: 2 * 24 * 60 * 60, // token lifetime: 2 days * 24 hours * 60 minutes * 60 seconds
+    });
 
-  await UserModel.findByIdAndUpdate(id, { token });
+    await UserModel.findByIdAndUpdate(id, { token });
 
-  return token;
+    return token;
+  } catch (error) {
+    throw error;
+  }
 };
 
 // Clearing token
 UserSchema.statics.clearingToken = async function (id) {
-  return await this.findByIdAndUpdate(id, { token: null });
+  try {
+    return await this.findByIdAndUpdate(id, { token: null });
+  } catch (error) {
+    throw error;
+  }
 };
 
 // Get id from token and get user by id
 UserSchema.statics.getUserByIdFromToken = async function (token) {
-  const id = await jwt.verify(token, JWT_SECRET).id;
+  try {
+    const id = await jwt.verify(token, JWT_SECRET).id;
 
-  return await this.findById(id);
+    return await this.findById(id);
+  } catch (error) {
+    throw error;
+  }
 };
 
 // users collection mongoDB

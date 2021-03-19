@@ -2,6 +2,8 @@
 
 const UserModel = require('../models/user.model');
 
+const ErrorResponse = require('../utils/errorResponse');
+
 exports.register = async (req, res, next) => {
   try {
     // Create user
@@ -23,16 +25,14 @@ exports.login = async (req, res, next) => {
     const user = await UserModel.findOne({ email });
 
     if (!user) {
-      //TODO: ErrorHandler
-      throw new Error();
+      throw new ErrorResponse('Invalid credentials', 401);
     }
 
     // Check is password matches
     const isMatch = await user.matchPassword(password);
 
     if (!isMatch) {
-      //TODO: ErrorHandler
-      throw new Error();
+      throw new ErrorResponse('Invalid credentials', 401);
     }
 
     // Create token
@@ -62,8 +62,7 @@ exports.authorize = async (req, res, next) => {
     const user = await UserModel.getUserByIdFromToken(token);
 
     if (!user || user.token !== token) {
-      //TODO: ErrorHandler
-      throw new Error();
+      throw new ErrorResponse('Invalid token', 401);
     }
 
     req.user = user;
