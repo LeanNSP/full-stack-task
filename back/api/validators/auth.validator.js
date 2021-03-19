@@ -4,6 +4,8 @@ const Joi = require('joi');
 
 const UserModel = require('../models/user.model');
 
+const ErrorResponse = require('../utils/errorResponse');
+
 exports.validateCredentials = (req, res, next) => {
   try {
     const credentialsRules = Joi.object({
@@ -16,8 +18,7 @@ exports.validateCredentials = (req, res, next) => {
     const valid = credentialsRules.validate(req.body);
 
     if (valid.error) {
-      //TODO: ErrorHandler
-      throw new Error();
+      throw new ErrorResponse('Invalid name or message', 401);
     }
 
     next();
@@ -34,8 +35,7 @@ exports.validateUniqueEmail = async (req, res, next) => {
     const user = await UserModel.findOne({ email });
 
     if (user) {
-      //TODO: ErrorHandler
-      throw new Error();
+      throw new ErrorResponse('Email in use', 409);
     }
 
     next();
