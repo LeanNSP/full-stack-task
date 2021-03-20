@@ -1,37 +1,35 @@
-import { lazy } from "react";
+import { lazy } from 'react';
 
 const routes = [
   {
-    path: "/login",
-    label: "Login",
+    path: '/login',
+    label: 'Login',
     exact: true,
     component: lazy(() =>
-      import(
-        "../components/views/LoginPage/LoginPage.jsx" /* webpackChunkName: "login" */
-      )
+      import('../components/views/LoginPage/LoginPage.jsx' /* webpackChunkName: "login" */),
     ),
     private: false,
     restricted: true,
   },
   {
-    path: "/register",
-    label: "Register",
+    path: '/register',
+    label: 'Register',
     exact: true,
     component: lazy(() =>
       import(
-        "../components/views/RegisterPage/RegisterPage.jsx"
+        '../components/views/RegisterPage/RegisterPage.jsx'
         /* webpackChunkName: "register" */
-      )
+      ),
     ),
     private: false,
     restricted: true,
   },
   {
-    path: "/test",
-    label: "Test",
+    path: '/test',
+    label: 'Test',
     exact: true,
     component: lazy(() =>
-      import("../components/views/TestPage.jsx" /* webpackChunkName: "test" */)
+      import('../components/views/TestPage/TestPage.jsx' /* webpackChunkName: "test" */),
     ),
     private: true,
     restricted: true,

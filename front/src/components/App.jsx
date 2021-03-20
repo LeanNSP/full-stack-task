@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import { Switch } from 'react-router-dom';
+import { Switch, Redirect } from 'react-router-dom';
 
 import { PublicRoute, PrivateRoute } from './Routes';
 
@@ -7,7 +7,7 @@ import routes from '../routes';
 
 const App = () => {
   return (
-    <Suspense>
+    <Suspense fallback={<div>Loading...</div>}>
       <Switch>
         {routes.map(route =>
           route.private ? (
@@ -16,6 +16,7 @@ const App = () => {
             <PublicRoute key={route.path} {...route} />
           ),
         )}
+        <Redirect to={'/login'} />
       </Switch>
     </Suspense>
   );
