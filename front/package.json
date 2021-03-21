@@ -8,6 +8,7 @@
     "@testing-library/user-event": "12.8.3",
     "react": "17.0.1",
     "react-dom": "17.0.1",
+    "react-hook-form": "^6.15.5",
     "react-router-dom": "5.2.0",
     "react-scripts": "4.0.3",
     "web-vitals": "1.1.1"
@@ -42,11 +43,11 @@
     "prettier": "2.2.1"
   },
   "husky": {
-     "hooks": {
-        "pre-commit": "lint-staged"
-     }
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
   "lint-staged": {
-     "**/*": "prettier --write --ignore-unknown"
+    "**/*": "prettier --write --ignore-unknown"
   }
 }
