@@ -1,5 +1,7 @@
 import { authActions } from './';
 
+import fetchServer from '../../services/fetchServer';
+
 export const register = async (credentials, dispatch) => {
   dispatch(authActions.registerRequest());
 
@@ -16,6 +18,7 @@ export const logIn = async (credentials, dispatch) => {
 
   try {
     //TODO: fetch
+
     dispatch(authActions.loginSuccess());
   } catch (error) {
     dispatch(authActions.loginError());

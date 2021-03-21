@@ -1,15 +1,21 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+
+import { authOperation } from '../../../redux/auth';
 
 import style from './LoginForm.module.css';
 
 const LoginForm = () => {
   const { register, handleSubmit, errors } = useForm(); // development mode: add const { watch } = useForm();
-  const onSubmit = data => console.log(data);
 
   // development mode: watch input value by passing the name of it
   //   console.log(watch('email'));
   //   console.log(watch('password'));
+
+  const dispatch = useDispatch();
+
+  const onSubmit = credentials => authOperation.login(credentials, dispatch);
 
   return (
     <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
