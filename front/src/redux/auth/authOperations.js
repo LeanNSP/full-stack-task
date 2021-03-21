@@ -7,8 +7,11 @@ const authOperations = {
     dispatch(authActions.registerRequest());
 
     try {
-      //TODO: fetch
-      dispatch(authActions.registerSuccess());
+      const data = await fetchServer.post('/auth/register', credentials);
+
+      dispatch(authActions.registerSuccess(data));
+
+      return data;
     } catch (error) {
       dispatch(authActions.registerError());
     }

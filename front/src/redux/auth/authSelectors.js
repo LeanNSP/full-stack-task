@@ -1,7 +1,5 @@
 const authSelectors = {
-  isAuthenticated: state => state.auth.token,
-
-  getUserName: state => state.auth.email,
+  isAuth: state => state.auth.token,
 };
 
 export default authSelectors;
