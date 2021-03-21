@@ -1,5 +1,21 @@
 .wrapper {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 290px;
+  color: #212121;
+  padding-top: 200px;
+}
+
+.title {
+  font-size: 30px;
+  line-height: 36px;
+  margin-bottom: 30px;
   text-align: center;
-  font-size: 24px;
-  color: #000000;
+}
+
+.btn {
+  margin: 0 auto;
+  width: 80px;
 }

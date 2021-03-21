@@ -4,21 +4,29 @@ import { useDispatch } from 'react-redux';
 
 import { authOperations } from '../../../redux/auth';
 
-import style from './LoginForm.module.css';
+import style from './RegisterForm.module.css';
 
-const LoginForm = () => {
-  const { register, handleSubmit, errors } = useForm(); // development mode: add const { watch } = useForm();
+const RegisterForm = () => {
+  const { register, handleSubmit, watch, errors } = useForm();
 
   // development mode: watch input value by passing the name of it
   //   console.log(watch('email'));
   //   console.log(watch('password'));
+  //   console.log(watch('password2'));
 
   const dispatch = useDispatch();
 
-  const onSubmit = (credentials, e) => {
+  const onSubmit = async ({ email, password }, e) => {
     e.target.reset();
-    authOperations.login(credentials, dispatch);
+
+    const data = await authOperations.register({ email, password }, dispatch);
+
+    if (data) {
+      await authOperations.login({ email, password }, dispatch);
+    }
   };
+
+  const validatePassword = value => value === watch('password'); // value is from password2 and watch will return value from password
 
   return (
     <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
@@ -40,15 +48,26 @@ const LoginForm = () => {
           name="password"
           type="password"
           placeholder="Enter password"
-          ref={register({ required: true })}
+          ref={register({ required: true, min: 6, max: 16 })}
         />
-        {errors.password && alert('Password is required')}
+        {errors.password && console.dir(errors)}
+      </label>
+      <label className={style.label}>
+        <span>Confirm password*</span>
+
+        <input
+          name="password2"
+          type="password"
+          placeholder="Confirm password"
+          ref={register({ validate: validatePassword })}
+        />
+        {errors.password2 && alert('Password mismatch')}
       </label>
       <button className={style.btn} type="submit">
-        Login
+        Register
       </button>
     </form>
   );
 };
 
-export default LoginForm;
+export default RegisterForm;
