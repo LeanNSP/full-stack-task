@@ -7,8 +7,7 @@ const LoginForm = () => {
   const { register, handleSubmit, errors } = useForm(); // development mode: add const { watch } = useForm();
   const onSubmit = data => console.log(data);
 
-  // development mode
-  // watch input value by passing the name of it
+  // development mode: watch input value by passing the name of it
   //   console.log(watch('email'));
   //   console.log(watch('password'));
 
@@ -23,7 +22,11 @@ const LoginForm = () => {
       <label className={style.label}>
         <span>Password*</span>
 
-        <input name="password" placeholder="Enter password" ref={register({ required: true })} />
+        <input
+          name="password"
+          placeholder="Enter password"
+          ref={register({ required: true, min: 6, max: 16 })}
+        />
         {errors.lastName && 'Last name is required'}
       </label>
       <button className={style.btn} type="submit">
