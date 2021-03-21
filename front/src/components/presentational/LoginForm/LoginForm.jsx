@@ -2,7 +2,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 
-import { authOperation } from '../../../redux/auth';
+import { authOperations } from '../../../redux/auth';
 
 import style from './LoginForm.module.css';
 
@@ -15,14 +15,22 @@ const LoginForm = () => {
 
   const dispatch = useDispatch();
 
-  const onSubmit = credentials => authOperation.login(credentials, dispatch);
+  const onSubmit = (credentials, e) => {
+    e.target.reset();
+    authOperations.login(credentials, dispatch);
+  };
 
   return (
     <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
       <label className={style.label}>
         <span>Email*</span>
 
-        <input name="email" placeholder="Enter email" ref={register({ required: true })} />
+        <input
+          name="email"
+          type="email"
+          placeholder="Enter email"
+          ref={register({ required: true })}
+        />
         {errors.firstName && 'First name is required'}
       </label>
       <label className={style.label}>
@@ -30,6 +38,7 @@ const LoginForm = () => {
 
         <input
           name="password"
+          type="password"
           placeholder="Enter password"
           ref={register({ required: true, min: 6, max: 16 })}
         />
