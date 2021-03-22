@@ -7,6 +7,7 @@ const INITIAL_USER_STATE = { id: null, email: null, token: null };
 const authReducer = createReducer(INITIAL_USER_STATE, {
   [authActions.registerSuccess]: (_, { payload }) => payload,
   [authActions.loginSuccess]: (_, { payload }) => payload,
+  [authActions.logoutSuccess]: () => INITIAL_USER_STATE,
 });
 
 export default authReducer;

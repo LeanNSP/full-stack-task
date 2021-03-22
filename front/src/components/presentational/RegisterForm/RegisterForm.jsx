@@ -17,13 +17,15 @@ const RegisterForm = () => {
   const dispatch = useDispatch();
 
   const onSubmit = async ({ email, password }, e) => {
-    e.target.reset();
+    e.preventDefault();
 
     const data = await authOperations.register({ email, password }, dispatch);
 
     if (data) {
       await authOperations.login({ email, password }, dispatch);
     }
+
+    e.target.reset();
   };
 
   const validatePassword = value => value === watch('password'); // value is from password2 and watch will return value from password

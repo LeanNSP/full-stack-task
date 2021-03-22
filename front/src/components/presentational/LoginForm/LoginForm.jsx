@@ -16,8 +16,11 @@ const LoginForm = () => {
   const dispatch = useDispatch();
 
   const onSubmit = (credentials, e) => {
-    e.target.reset();
+    e.preventDefault();
+
     authOperations.login(credentials, dispatch);
+
+    e.target.reset();
   };
 
   return (

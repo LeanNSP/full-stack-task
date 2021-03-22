@@ -1,6 +1,6 @@
 import { authActions } from '.';
 
-import fetchServer from '../../services/fetchServer';
+import fetchServer, { tokenToHeader } from '../../services/fetchServer';
 
 const authOperations = {
   register: async (credentials, dispatch) => {
@@ -23,6 +23,8 @@ const authOperations = {
     try {
       const data = await fetchServer.post('/auth/login', credentials);
 
+      tokenToHeader.set(data.token);
+
       dispatch(authActions.loginSuccess(data));
     } catch (error) {
       dispatch(authActions.loginError());
@@ -33,7 +35,10 @@ const authOperations = {
     dispatch(authActions.logoutRequest());
 
     try {
-      //TODO: fetch
+      await fetchServer.get('/auth/logout');
+
+      tokenToHeader.unset();
+
       dispatch(authActions.logoutSuccess());
     } catch (error) {
       dispatch(authActions.logoutError());
