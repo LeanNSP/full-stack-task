@@ -52,7 +52,7 @@ const RegisterForm = () => {
           placeholder="Enter password"
           ref={register({ required: true, min: 6, max: 16 })}
         />
-        {errors.password && console.dir(errors)}
+        {errors.password && alert('Password is required')}
       </label>
       <label className={style.label}>
         <span>Confirm password*</span>
