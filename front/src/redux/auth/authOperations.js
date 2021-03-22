@@ -13,7 +13,7 @@ const authOperations = {
 
       return data;
     } catch (error) {
-      dispatch(authActions.registerError());
+      dispatch(authActions.registerError(error));
     }
   },
 
@@ -27,7 +27,7 @@ const authOperations = {
 
       dispatch(authActions.loginSuccess(data));
     } catch (error) {
-      dispatch(authActions.loginError());
+      dispatch(authActions.loginError(error));
     }
   },
 
@@ -41,7 +41,7 @@ const authOperations = {
 
       dispatch(authActions.logoutSuccess());
     } catch (error) {
-      dispatch(authActions.logoutError());
+      dispatch(authActions.logoutError(error));
     }
   },
 };
